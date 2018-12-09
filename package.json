@@ -13,11 +13,12 @@
     "author": "Sami Ruokamo",
     "license": "ISC",
     "devDependencies": {
+        "@types/events": "^1.2.0",
+        "@types/webmidi": "^2.0.2",
         "parcel-bundler": "^1.10.3",
         "typescript": "^3.2.2"
     },
     "dependencies": {
-        "@types/events": "^1.2.0",
         "lit-html": "^0.13.0",
         "tslib": "^1.9.3"
     }
