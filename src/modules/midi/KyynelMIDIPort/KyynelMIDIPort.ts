@@ -27,14 +27,41 @@ export class KyynelMIDIPort implements WebMidi.MIDIPort {
     throw new Error("Method not implemented.");
   }
   onmidimessage(message: WebMidi.MIDIMessageEvent) {
-    console.log("message: ", message);
+    throw new Error("Method not implemented.");
   }
 
   constructor(port: WebMidi.MIDIPort) {
     Object.assign(this, port);
     this.id = port.id;
+    this.manufacturer = port.manufacturer;
+    this.name = port.name;
     this.type = port.type;
+    this.version = port.version;
     this.state = port.state;
     this.connection = port.connection;
+  }
+}
+
+export class KyynelMIDIInput extends KyynelMIDIPort implements WebMidi.MIDIInput {
+  constructor(port: WebMidi.MIDIInput) {
+    super(port);
+    port.onmidimessage = this.onmidimessage;
+  }
+  onmidimessage(message: WebMidi.MIDIMessageEvent): void {
+    console.log(message.data);
+  }
+}
+
+export class KyynelMIDIOutput extends KyynelMIDIPort implements WebMidi.MIDIOutput {
+  constructor(port: WebMidi.MIDIOutput) {
+    super(port);
+    port.send = this.send;
+    port.clear = this.clear;
+  }
+  send(data: number[] | Uint8Array, timestamp?: number): void {
+    throw new Error("Method not implemented");
+  }
+  clear(): void {
+   throw new Error("Method not implemented");
   }
 }

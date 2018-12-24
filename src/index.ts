@@ -1,22 +1,25 @@
 import { html, render } from 'lit-html';
-import { KyynelMIDIPort } from './modules/midi/KyynelMIDIPort/KyynelMIDIPort';
+import { KyynelMIDIInput, KyynelMIDIOutput } from './modules/midi/KyynelMIDIPort/KyynelMIDIPort';
 import { KyynelMIDIHelper } from './modules/midi/KyynelMIDIHelper';
 
-const inputs: KyynelMIDIPort[] = new Array();
-const outputs: KyynelMIDIPort[] = new Array();
+const inputs: KyynelMIDIInput[] = new Array();
+const outputs: KyynelMIDIOutput[] = new Array();
 
 const midi = KyynelMIDIHelper.requestMIDIAccess()
   .then((access: WebMidi.MIDIAccess) => {
     // Inputs
     access.inputs.forEach(port => {
-      inputs.push(new KyynelMIDIPort(port));
+      inputs.push(new KyynelMIDIInput(port));
     });
 
     // Outputs
     access.outputs.forEach(port => {
-      outputs.push(new KyynelMIDIPort(port));
+      outputs.push(new KyynelMIDIOutput(port));
     });
   });
+
+midi.then(() => console.log("inputs: ", inputs));
+midi.then(() => console.log("outputs: ", outputs));
 
 /*
 const root = document.getElementById('root') as HTMLElement;
