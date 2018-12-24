@@ -1,18 +1,11 @@
 import { html, render } from 'lit-html';
-import { KyynelMIDIPort } from './modules/KyynelMIDIPort/KyynelMIDIPort';
-
-function requestMIDIAccess() {
-  if (window.navigator && 'function' === typeof window.navigator.requestMIDIAccess) {
-    return window.navigator.requestMIDIAccess();
-  } else {
-    throw 'No Web MIDI support';
-  }
-}
+import { KyynelMIDIPort } from './modules/midi/KyynelMIDIPort/KyynelMIDIPort';
+import { KyynelMIDIHelper } from './modules/midi/KyynelMIDIHelper';
 
 const inputs: KyynelMIDIPort[] = new Array();
 const outputs: KyynelMIDIPort[] = new Array();
 
-const midi = requestMIDIAccess()
+const midi = KyynelMIDIHelper.requestMIDIAccess()
   .then((access: WebMidi.MIDIAccess) => {
     // Inputs
     access.inputs.forEach(port => {
@@ -25,9 +18,9 @@ const midi = requestMIDIAccess()
     });
   });
 
+/*
 const root = document.getElementById('root') as HTMLElement;
 
-/*
 function renderTime(time: Date) {
   return html`
     <p>It\'s: ${time.toISOString()}</p>
