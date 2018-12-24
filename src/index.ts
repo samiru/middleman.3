@@ -12,20 +12,18 @@ function requestMIDIAccess() {
 const inputs: KyynelMIDIPort[] = new Array();
 const outputs: KyynelMIDIPort[] = new Array();
 
-const connect = requestMIDIAccess()
+const midi = requestMIDIAccess()
   .then((access: WebMidi.MIDIAccess) => {
-    access.inputs.forEach(input => {
-      inputs.push(new KyynelMIDIPort(input));
-    });
-    access.outputs.forEach(output => {
-      outputs.push(new KyynelMIDIPort(output));
+    // Inputs
+    access.inputs.forEach(port => {
+      inputs.push(new KyynelMIDIPort(port));
     });
 
-    console.log("inputs: ", inputs);
-    console.log("outputs: ", outputs);
+    // Outputs
+    access.outputs.forEach(port => {
+      outputs.push(new KyynelMIDIPort(port));
+    });
   });
-
-console.log(connect);
 
 const root = document.getElementById('root') as HTMLElement;
 

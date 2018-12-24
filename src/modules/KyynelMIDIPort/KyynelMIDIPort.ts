@@ -30,7 +30,7 @@ export class KyynelMIDIPort implements WebMidi.MIDIPort {
     console.log("message: ", message);
   }
 
-  constructor(public port: WebMidi.MIDIPort) {
+  constructor(port: WebMidi.MIDIPort) {
     Object.assign(this, port);
     this.id = port.id;
     this.type = port.type;
