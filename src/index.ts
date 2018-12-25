@@ -1,5 +1,5 @@
 import { html, render } from 'lit-html';
-import { KyynelMIDIInput, KyynelMIDIOutput } from './modules/midi/KyynelMIDIPort/KyynelMIDIPort';
+import { KyynelMIDIInput, KyynelMIDIOutput } from './modules/midi/KyynelMIDIPort';
 import { KyynelMIDIHelper } from './modules/midi/KyynelMIDIHelper';
 
 const inputs: KyynelMIDIInput[] = new Array();
