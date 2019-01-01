@@ -1,32 +1,28 @@
 import { html, render } from 'lit-html';
-import { KyynelMIDIInput, KyynelMIDIOutput } from './modules/midi/KyynelMIDIPort';
-import { KyynelMIDIHelper } from './modules/midi/KyynelMIDIHelper';
 import WebMidi from 'webmidi';
+import { MiddleMan } from './modules/middleman/MiddleMan';
 
-//const inputs: KyynelMIDIInput[] = new Array();
-//const outputs: KyynelMIDIOutput[] = new Array();
+const middleman:MiddleMan = new MiddleMan();
 
-WebMidi.enable((error: any) => {
-  if (error) {
-    console.error("WebMidi could not be enabled: ", error);
-  }
-  else {
-    console.log("WebMidi enabled!");
-    console.log("inputs: ", WebMidi.inputs);
-    console.log("outputs: ", WebMidi.outputs);
+const midi = new Promise((resolve, reject) => {
+  WebMidi.enable((error: any) => {
+    if (error) {
+      reject(error);
+    }
+    else {
+      resolve();
+    }
+  }, true);
+});
 
-    WebMidi.inputs.forEach((input) => {
-      input.addListener("noteon", "all", event => {
-        console.log("noteon: ", event);
-      });
+midi.catch((error) => {
+  console.error("MIDI initialization failed!", error);
+});
 
-      input.addListener("controlchange", "all", (event) => {
-        console.log("controlchange: ", event);
-      });
-    });
-
-  }
-}, true);
+midi.then(() => {
+  console.log("MIDI initialization succeeded!");
+  middleman.init();
+});
 
 /*
 const root = document.getElementById('root') as HTMLElement;
