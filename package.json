@@ -20,6 +20,7 @@
     },
     "dependencies": {
         "lit-html": "^0.13.0",
-        "tslib": "^1.9.3"
+        "tslib": "^1.9.3",
+        "webmidi": "^2.3.0"
     }
 }

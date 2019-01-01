@@ -5,6 +5,11 @@
       "lib": ["dom", "es2015", "es2015.collection"],
       "importHelpers": true,
       "strict": true,
-      "moduleResolution": "node"
-    }
+      "moduleResolution": "node",
+      "allowJs": true,
+      "allowSyntheticDefaultImports": true
+    },
+    "exclude": [
+      "dist"
+    ]
 }

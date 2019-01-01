@@ -1,25 +1,32 @@
 import { html, render } from 'lit-html';
 import { KyynelMIDIInput, KyynelMIDIOutput } from './modules/midi/KyynelMIDIPort';
 import { KyynelMIDIHelper } from './modules/midi/KyynelMIDIHelper';
+import WebMidi from 'webmidi';
 
-const inputs: KyynelMIDIInput[] = new Array();
-const outputs: KyynelMIDIOutput[] = new Array();
+//const inputs: KyynelMIDIInput[] = new Array();
+//const outputs: KyynelMIDIOutput[] = new Array();
 
-const midi = KyynelMIDIHelper.requestMIDIAccess()
-  .then((access: WebMidi.MIDIAccess) => {
-    // Inputs
-    access.inputs.forEach(port => {
-      inputs.push(new KyynelMIDIInput(port));
+WebMidi.enable((error: any) => {
+  if (error) {
+    console.error("WebMidi could not be enabled: ", error);
+  }
+  else {
+    console.log("WebMidi enabled!");
+    console.log("inputs: ", WebMidi.inputs);
+    console.log("outputs: ", WebMidi.outputs);
+
+    WebMidi.inputs.forEach((input) => {
+      input.addListener("noteon", "all", event => {
+        console.log("noteon: ", event);
+      });
+
+      input.addListener("controlchange", "all", (event) => {
+        console.log("controlchange: ", event);
+      });
     });
 
-    // Outputs
-    access.outputs.forEach(port => {
-      outputs.push(new KyynelMIDIOutput(port));
-    });
-  });
-
-midi.then(() => console.log("inputs: ", inputs));
-midi.then(() => console.log("outputs: ", outputs));
+  }
+}, true);
 
 /*
 const root = document.getElementById('root') as HTMLElement;
